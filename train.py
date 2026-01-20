@@ -8,7 +8,7 @@ from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_squared_error
 
 # github actions 환경변수에서 가져오거나 직접 입력
-tracking_rui = "http://52.79.234.78:5000"
+tracking_uri = "http://52.79.234.78:5000"
 mlflow.set_tracking_uri(tracking_uri)
 mlflow.set_experiment("Automated_Training")
 
