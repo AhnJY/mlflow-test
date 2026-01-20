@@ -1,0 +1,31 @@
+name: MLflow Training Pipeline
+
+on:
+  push:
+    branches: [ main ]  # main 브랜치에 푸시될 때 실행
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install mlflow boto3 sklearn pandas
+
+      - name: Run Training
+        env:
+          # GitHub Secrets에 미리 등록해야 함
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "ap-northeast-2" 
+        run: |
+          # EC2 IP 주소를 환경 변수로 설정하여 실행
+          python train.py
